@@ -3,7 +3,7 @@ $(document).ready(function() {
   $.getScript('//connect.facebook.net/en_UK/all.js', function(){
     FB.init({
       appId: '172522912919587',
-      channelUrl: '//yourapp.com/channel.html',
+      channelUrl: '/channel.html',
       status: false,
       xfbml: false
     });     
