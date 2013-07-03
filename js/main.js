@@ -13,14 +13,22 @@ $(document).ready(function() {
     // get the data from Facebook
     FB.api("/fql?q="+encodeURIComponent('SELECT pid, aid, src_big, link, caption from photo WHERE owner = 161857717209995 ORDER BY created desc'), function(resp) {
       var photos = resp.data;
-      var size = Math.min(25, photos.length);
+      var numPhotos = Math.min(25, photos.length);
 
-      for (var i = 0; i < size; i++) {
-        $container.append("<div class='photo'><image src='"+photos[i].src_big+"'' /></div>");
+      // Choose 25 photos randomly, and add to page
+      for (var i = 0; i < numPhotos; i++) {
+        var randomIndex = Math.floor(Math.random()*photos.length);
+        var photo = photos.splice(randomIndex, 1);
+        var caption = photo[0].caption;
+        var url = photo[0].src_big;
+
+        $container.append("<div class='photo'><a href='" + url + "' title='" + caption + "'><image src='"+ url +"' alt='" + caption + "' /></a></div>");
       }
 
+      jQuery("#photos a").slimbox();
+
       $container.imagesLoaded( function() {
-        console.log("Loading masonary via jquery");
+        // Layout
         $container.masonry({
           columnWidth: 250,
           itemSelector: '.photo'
