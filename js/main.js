@@ -12,13 +12,23 @@ $(document).ready(function() {
     
     // get the data from Facebook
     FB.api("/fql?q="+encodeURIComponent('SELECT pid, aid, src_big, link, caption from photo WHERE owner = 161857717209995 ORDER BY created desc'), function(resp) {
-      var photos = resp.data;
-      var numPhotos = Math.min(25, photos.length);
+      // Setup config variables
+      var recent_photos = 10;
+      var random_photos = 25;
+      var total_photos  = recent_photos + random_photos;
 
-      // Choose 25 photos randomly, and add to page
-      for (var i = 0; i < numPhotos; i++) {
-        var randomIndex = Math.floor(Math.random()*photos.length);
-        var photo = photos.splice(randomIndex, 1);
+      var photos = resp.data;
+      var num_photos = Math.min(total_photos, photos.length);
+
+      for (var i = 0; i < num_photos; i++) {
+        var photo;
+        if (i < recent_photos) {
+          photo = photos.splice(0, 1);
+        } else {
+          var randomIndex = Math.floor(Math.random()*photos.length);
+          photo = photos.splice(randomIndex, 1);
+        }
+        
         var caption = photo[0].caption;
         var url = photo[0].src_big;
 
