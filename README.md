@@ -14,34 +14,34 @@ fbpagegallery optionally uses Masonry (http://masonry.desandro.com/) for laying 
 How to Use
 ----------
 * Add a container element:
-  <div id="#photos"></div>
-* Include `fbPageGallery.js` in your HTML file. Include 'masonry.js` & `imagesLoaded` if using Masonry. Include `slimbox2.js` if using Slimbox.
+    <div id="#photos"></div>
+* Include `fbPageGallery.js` in your HTML file. Include `masonry.js` & `imagesLoaded` if using Masonry. Include `slimbox2.js` if using Slimbox.
  
-  <script src="js/vendor/masonry.js"></script>
-  <script src="js/vendor/imagesloaded.js"></script>
-  <script src="js/vendor/slimbox2.js"></script>
-  <script src="js/fbPageGallery.js"></script>
+    <script src="js/vendor/masonry.js"></script>
+    <script src="js/vendor/imagesloaded.js"></script>
+    <script src="js/vendor/slimbox2.js"></script>
+    <script src="js/fbPageGallery.js"></script>
   
 * Initialise the fbPageGallery, setting appropriate options. The fbsdk_config is optional, but you must include this if you haven't already setup the Facebook JS SDK.
 
-  $(document).ready(function() {
-    // Setup config variables
-    var options = {
-      page_fbid: '161857717209995',
-      container: '#photos',
-      layoutWidth: 250,
-      itemClass: 'photo' 
-    };
+    $(document).ready(function() {
+      // Setup config variables
+      var options = {
+        page_fbid: '161857717209995',
+        container: '#photos',
+        layoutWidth: 250,
+        itemClass: 'photo' 
+      };
 
-    var fbsdk_config = {
-      appId: '172522912919587',
-      channelUrl: '/channel.html',
-      status: false,
-      xfbml: false
-    };
+      var fbsdk_config = {
+        appId: '172522912919587',
+        channelUrl: '/channel.html',
+        status: false,
+        xfbml: false
+      };
   
-    $.fbPageGallery(options, fbsdk_config);  
-  });
+      $.fbPageGallery(options, fbsdk_config);  
+    });
 
 * Add/modify the CSS for Masonry and include `slimbox2.css` for Slimbox, as appropriate.
 
