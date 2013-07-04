@@ -18,5 +18,5 @@ $(document).ready(function() {
     xfbml: false
   };
 
-  $.fbgallery(options, fbsdk_config);  
+  $.fbPageGallery(options, fbsdk_config);  
 });

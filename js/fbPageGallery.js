@@ -11,7 +11,7 @@
   var htmlEscaper = /[&<>"'\/]/g;
   var options;
 
-  $.fbgallery = function(_options, _fbsdk_config) {
+  $.fbPageGallery = function(_options, _fbsdk_config) {
     options = $.extend({
       recent_photos : 10,
       random_photos : 25,
