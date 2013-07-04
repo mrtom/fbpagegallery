@@ -48,4 +48,9 @@ How to Use
 Demo
 ----
 
-Simply clone the repo into your webserver of choice and open in a browser, or go visit http://telliott.net/facebookExamples/fbpagegallery/
+Simply clone the repo into your webserver of choice and open in a browser, or go visit one of the examples, below.
+
+Examples
+-----
+* http://telliott.net/facebookExamples/fbpagegallery/
+* http://www.traversearavis.com/gallery
