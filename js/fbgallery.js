@@ -1,4 +1,16 @@
 (function($) {
+  // Private globals
+  var htmlEscapes = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;'
+  };
+  var htmlEscaper = /[&<>"'\/]/g;
+  var options;
+
   $.fbgallery = function(_options, _fbsdk_config) {
     options = $.extend({
       recent_photos : 10,
@@ -36,9 +48,26 @@
             photo = photos.splice(randomIndex, 1);
           }
           
-          var caption = photo[0].caption;
-          // TODO: XSS issues here, find out if Facebook guarantees the results are safe
-          $container.append("<div class='" + options.itemClass + "'><a href='" + photo[0]['link'] + "' title='" + caption + "'><image src='"+ photo[0].src_big + "' alt='" + caption + "' /></a></div>");
+          // Build image up by hand to help with proper html escaping
+          var caption = html_escape(photo[0].caption);
+          var div = $("<div></div>");
+          div.addClass(options.itemClass);
+
+          var anchor = $("<a></a>");
+          anchor.attr({
+            href: photo[0]['link'],
+            title: caption
+          });
+
+          var img = $("<image/>");
+          img.attr({
+            src: photo[0].src_big,
+            alt: caption
+          });
+
+          anchor.append(img);
+          div.append(anchor);
+          $container.append(div);
         }
 
         if (options.litebox) jQuery(options.container + " a").slimbox({}, function(el) {
@@ -56,4 +85,11 @@
       });
     });
   };
+
+  html_escape = function(string) {
+    return ('' + string).replace(htmlEscaper, function(match) {
+      return htmlEscapes[match];
+    });
+  };
+
 })(jQuery);
