@@ -13,6 +13,7 @@ $(document).ready(function() {
   var container = '#photos';
   var litebox = true;
   var layout = true;
+  var layoutWidth = 250;
   var itemClass = 'photo';
 
   $.ajaxSetup({ cache: true });
@@ -50,9 +51,8 @@ $(document).ready(function() {
 
       if (layout) {
         $container.imagesLoaded( function() {
-          // Layout
           $container.masonry({
-            columnWidth: 250,
+            columnWidth: layoutWidth,
             itemSelector: '.'+itemClass
           });
         });
