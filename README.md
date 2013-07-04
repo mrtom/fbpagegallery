@@ -43,7 +43,7 @@ How to Use
           $.fbPageGallery(options, fbsdk_config);  
         });
 
-1. Add/modify the CSS for Masonry and include `slimbox2.css` for Slimbox, as appropriate.
+1. Add/modify the CSS for Masonry (see the 'Authors styles' section in main.css) and include `slimbox2.css` for Slimbox, as appropriate. You'll also want to include the images from css/ if you use Slimbox
 
 Demo
 ----
