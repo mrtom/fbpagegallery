@@ -1,22 +1,32 @@
 $(document).ready(function() {
+  // Setup config variables
+  var recent_photos = 10;
+  var random_photos = 25;
+  var fbsdk_config = {
+    appId: '172522912919587',
+    channelUrl: '/channel.html',
+    status: false,
+    xfbml: false
+  };
+  var app_fbid = '172522912919587';
+  var page_fbid = '161857717209995';
+  var container = '#photos';
+  var litebox = true;
+  var layout = true;
+  var itemClass = 'photo';
+
   $.ajaxSetup({ cache: true });
   $.getScript('//connect.facebook.net/en_UK/all.js', function(){
-    FB.init({
-      appId: '172522912919587',
-      channelUrl: '/channel.html',
-      status: false,
-      xfbml: false
-    });     
 
-    var $container = $('#photos');
+    if (fbsdk_config) {
+      FB.init(fbsdk_config);           
+    }
+
+    var $container = $(container);
     
     // get the data from Facebook
-    FB.api("/fql?q="+encodeURIComponent('SELECT pid, aid, src_big, link, caption from photo WHERE owner = 161857717209995 ORDER BY created desc'), function(resp) {
-      // Setup config variables
-      var recent_photos = 10;
-      var random_photos = 25;
+    FB.api("/fql?q="+encodeURIComponent('SELECT pid, aid, src_big, link, caption from photo WHERE owner = ' + page_fbid + ' ORDER BY created desc'), function(resp) {
       var total_photos  = recent_photos + random_photos;
-
       var photos = resp.data;
       var num_photos = Math.min(total_photos, photos.length);
 
@@ -30,20 +40,23 @@ $(document).ready(function() {
         }
         
         var caption = photo[0].caption;
-        var url = photo[0].src_big;
-
-        $container.append("<div class='photo'><a href='" + url + "' title='" + caption + "'><image src='"+ url +"' alt='" + caption + "' /></a></div>");
+        // TODO: XSS issues here, find out if Facebook guarantees the results are safe
+        $container.append("<div class='" + itemClass + "'><a href='" + photo[0]['link'] + "' title='" + caption + "'><image src='"+ photo[0].src_big + "' alt='" + caption + "' /></a></div>");
       }
 
-      jQuery("#photos a").slimbox();
-
-      $container.imagesLoaded( function() {
-        // Layout
-        $container.masonry({
-          columnWidth: 250,
-          itemSelector: '.photo'
-        });
+      if (litebox) jQuery(container + " a").slimbox({}, function(el) {
+        return [el.firstChild.src, el.firstChild.alt];
       });
+
+      if (layout) {
+        $container.imagesLoaded( function() {
+          // Layout
+          $container.masonry({
+            columnWidth: 250,
+            itemSelector: '.'+itemClass
+          });
+        });
+      }
     });
   });
 });
